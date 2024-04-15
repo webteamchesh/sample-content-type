@@ -1,56 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Test</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
-  </head>
-  <body>
-    <div id="vueApp">
-      <h1>Comments received</h1>
-      <ol>
-        <!--  Basic tempate, using v-for to iterate over an array.
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Test</title>
+	<!-- The original Vue apps on Cheshire East use Vue 2. -->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+</head>
+
+<body>
+	<div id="vueApp">
+		<h1>Comments received</h1>
+		<ol>
+			<!--  Basic tempate, using v-for to iterate over an array.
           And the double curly braces to specify data to be displayed. -->
-        <li v-for="item in items">{{item.myComment}}</li>
-      </ol>
-    </div>
-        <script>
-      // Create instance of Vue.
-      const app = new Vue({
-        // Define the element to mount the app within.
-        el: '#vueApp',
-        data() {
-          // Define some variables to be available within the app.
-          const contentType = 'testComment';
-          const access = 'QCpZfwnsgnQsyHHB3ID5isS43cZnthj6YoSPtemxFGtcH15I';
-          return {
-            // Variables defined here are available in the other sections with the prefix "this.".
-            url: `https://cms-chesheast.cloud.contensis.com/api/delivery/projects/website/contentTypes/${contentType}/entries/?accessToken=${access}`,
-            items: [],
-          };
-        },
-        methods: {
-          // Only one method needed - fetching the entries from Contensis.
-          getEntries: function () {
-            fetch(this.url)
-              .then((response) => {
-                return response.json();
-              })
-              .then((data) => {
-                // When we put data into our "items" variable, it will get displayed in the template.
-                this.items = data.items;
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          },
-        },
-        mounted() {
-          // Mounted hook - code here is executed once the app is mounted.
-          this.getEntries();
-        },
-      });
-    </script>
-  </body>
+			<li v-for="item in items">{{item.myComment}}</li>
+		</ol>
+	</div>
+	<script>
+		// Create instance of Vue.
+		const app = new Vue({
+			// Define the element to mount the app within.
+			el: '#vueApp',
+			data() {
+				// Define some variables to be available within the app.
+				const contentType = 'testComment';
+				const access = 'QCpZfwnsgnQsyHHB3ID5isS43cZnthj6YoSPtemxFGtcH15I';
+				return {
+					// Variables defined here are available in the other sections with the prefix "this.".
+					url: `https://cms-chesheast.cloud.contensis.com/api/delivery/projects/website/contentTypes/${contentType}/entries/?accessToken=${access}`,
+					items: [],
+				};
+			},
+			methods: {
+				// Only one method needed - fetching the entries from Contensis.
+				getEntries: function () {
+					fetch(this.url)
+						.then((response) => {
+							return response.json();
+						})
+						.then((data) => {
+							// When we put data into our "items" variable, it will get displayed in the template.
+							this.items = data.items;
+						})
+						.catch((error) => {
+							console.log(error);
+						});
+				},
+			},
+			mounted() {
+				// Mounted hook - code here is executed once the app is mounted.
+				this.getEntries();
+			},
+		});
+	</script>
+</body>
+
 </html>
